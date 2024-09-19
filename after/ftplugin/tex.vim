@@ -357,3 +357,36 @@ def Outline2Buffer(bufname: string)
     search(line, 'W')
   endfor
 enddef
+
+# Commands and mappings
+def LatexFilesCompletion(A: any, L: any, P: any): list<string>
+  return getcompletion('\w*.tex', 'file')
+enddef
+command! -nargs=? -buffer -complete=customlist,LatexFilesCompletion LatexRender LatexRender(<f-args>)
+command! -buffer LatexOutlineToggle LatexOutlineToggle()
+
+nnoremap <buffer> % <ScriptCmd>JumpTag()<cr>
+noremap <unique> <script> <buffer> <Plug>ForwardSearch <Scriptcmd>ForwardSearch()<cr>
+noremap <unique> <script> <buffer> <Plug>ChangeLatexEnvironment <Scriptcmd>ChangeLatexEnvironment()<cr>
+noremap <unique> <script> <buffer> <Plug>DeleteLatexEnvironment <Scriptcmd>DeleteLatexEnvironment()<cr>
+noremap <unique> <script> <buffer> <Plug>HighlightOuterEnvironment <Scriptcmd>HighlightOuterEnvironment()<cr>
+
+var use_default_mappings = true
+if exists('g:latex_tools_config')
+  use_default_mappings = get('g:latex_tools_config', 'use_default_mappings', true)
+endif
+
+if use_default_mappings
+  if !hasmapto('<Plug>ForwardSearch')
+    nnoremap <buffer> <F5> <Plug>ForwardSearch
+  endif
+  if !hasmapto('<Plug>ChangeLatexEnvironment')
+    nnoremap <buffer> <c-l>c <Plug>ChangeLatexEnvironment
+  endif
+  if !hasmapto('<Plug>DeleteLatexEnvironment')
+    nnoremap <buffer> <c-l>d <Plug>DeleteLatexEnvironment
+  endif
+  if !hasmapto('<Plug>HighlightOuterEnvironment')
+    nnoremap <buffer> <c-l>h <Plug>HighlightOuterEnvironment
+  endif
+endif
