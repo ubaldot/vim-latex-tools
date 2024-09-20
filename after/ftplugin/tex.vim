@@ -140,7 +140,7 @@ enddef
 
 def LatexRenderAndOpenMac(filename: string = '')
   # Open Skim
-  if !exists(glob('/Applications/Skim.app'))
+  if empty(glob('/Applications/Skim.app'))
     echoerr "'Skim.app not found!'"
     return
   endif
