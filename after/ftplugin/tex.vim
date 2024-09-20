@@ -145,7 +145,8 @@ def LatexRenderAndOpenMac(filename: string = '')
     return
   endif
   var open_file_cmd = $'open -a Skim.app {LatexBuildCommon()}'
-  silent exe $"!{open_file_cmd}"
+  system(open_file_cmd)
+  redraw
 enddef
 
 def GetExtremes(): list<number>

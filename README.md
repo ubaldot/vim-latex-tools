@@ -50,6 +50,15 @@ If you use gvim, then replace `vim` with `gvim` in the above line. If
 ### MacOs
 
 - You need [Skim.app](https://github.com/yegappan/lsp).
+- Open `Skim.app` and go to _Skim/Settings..._ and in the tab _Sync_ set the
+  _PDF-TeX Sync support_ fields as it follows
+
+     - Preset: Custom
+     - Command: `mvim`
+     - Arguments: `--remote-send ":call BackwardSearch(%line, '%file')<cr>"`
+
+The above works assuming that you are using _MacVim_. If you are using `vim`
+or `gvim` you have to change the field _Command_ accordingly.
 
 ## Autocompletion, diagnostics, etc.
 
