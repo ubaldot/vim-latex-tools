@@ -47,7 +47,7 @@ set synctex-editor-command "vim --servername vim --remote-send ':call BackwardSe
 If you use gvim, then replace `vim` with `gvim` in the above line. If
 `~/.config/zathura/zathurarc` file does not exist, create it.
 
-### MacOs
+### MacOS
 
 - You need [Skim.app](https://github.com/yegappan/lsp).
 - Open `Skim.app` and go to _Skim/Settings..._ and in the tab _Sync_ set the
