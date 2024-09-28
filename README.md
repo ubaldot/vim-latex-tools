@@ -1,11 +1,11 @@
 # Vim-latex-tools
 
-If you are fine with everything your LaTeX LSP provides but you are after
-few additional features for editing your LaTeX documents, then this plugin is
-for you.
+If you are fine with everything your LaTeX LSP provides but you are after few
+additional features for editing your LaTeX documents, then this plugin is for
+you.
 
-It offers _forward-_ and _inverse-_ search, document outline and few other handy
-features in an extremely compact and lightweight form that perfectly
+It offers _forward-_ and _inverse-_ search, document outline and few other
+handy features in an extremely compact and lightweight form that perfectly
 complements what is already offered by your LSP of choice. If you have new
 feature suggestions, just ask or send a PR. :)
 
@@ -53,9 +53,9 @@ If you use gvim, then replace `vim` with `gvim` in the above line. If
 - Open `Skim.app` and go to _Skim/Settings..._ and in the tab _Sync_ set the
   _PDF-TeX Sync support_ fields as it follows
 
-     - Preset: Custom
-     - Command: `mvim`
-     - Arguments: `--remote-send ":call BackwardSearch(%line, '%file')<cr>"`
+  - Preset: Custom
+  - Command: `mvim`
+  - Arguments: `--remote-send ":call BackwardSearch(%line, '%file')<cr>"`
 
 The above works assuming that you are using _MacVim_. If you are using `vim`
 or `gvim` you have to change the field _Command_ accordingly.
@@ -99,6 +99,12 @@ There are only two commands:
 :LatexRender # Build the .tex file
 :LatexOutlineToggle # Toggle the buffer outline
 ```
+
+> [!TIP]
+>
+> If you find the `:LatexOutlineToggle` command useful, you may check out the
+> [vim-outline](https://github.com/ubaldot/vim-outline) plugin that supports
+> other file types in addition to LaTeX.
 
 ## Mappings
 
