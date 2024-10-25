@@ -366,11 +366,22 @@ enddef
 command! -nargs=? -buffer -complete=customlist,LatexFilesCompletion LatexRender LatexRender(<f-args>)
 command! -buffer LatexOutlineToggle LatexOutlineToggle()
 
-nnoremap <buffer> % <ScriptCmd>JumpTag()<cr>
-noremap <unique> <script> <buffer> <Plug>ForwardSearch <Scriptcmd>ForwardSearch()<cr>
-noremap <unique> <script> <buffer> <Plug>ChangeLatexEnvironment <Scriptcmd>ChangeLatexEnvironment()<cr>
-noremap <unique> <script> <buffer> <Plug>DeleteLatexEnvironment <Scriptcmd>DeleteLatexEnvironment()<cr>
-noremap <unique> <script> <buffer> <Plug>HighlightOuterEnvironment <Scriptcmd>HighlightOuterEnvironment()<cr>
+
+if empty(maparg("%"))
+  nnoremap <buffer> <script> % <ScriptCmd>JumpTag()<cr>
+endif
+if empty(maparg("<Plug>ForwardSearch"))
+  noremap <script> <buffer> <Plug>ForwardSearch <Scriptcmd>ForwardSearch()<cr>
+endif
+if empty(maparg("<Plug>ChangeLatexEnvironment"))
+  noremap <script> <buffer> <Plug>ChangeLatexEnvironment <Scriptcmd>ChangeLatexEnvironment()<cr>
+endif
+if empty(maparg("<Plug>DeleteLatexEnvironment"))
+  noremap <script> <buffer> <Plug>DeleteLatexEnvironment <Scriptcmd>DeleteLatexEnvironment()<cr>
+endif
+if empty(maparg("<Plug>HighlightOuterEnvironment"))
+  noremap <script> <buffer> <Plug>HighlightOuterEnvironment <Scriptcmd>HighlightOuterEnvironment()<cr>
+endif
 
 var use_default_mappings = true
 if exists('g:latex_tools_config')
