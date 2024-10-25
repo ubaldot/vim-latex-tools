@@ -265,6 +265,7 @@ def g:BackwardSearch(line: number, filename: string)
   cursor(line, 1)
   exe $"sign place 4 line={line} name=ChangeEnv buffer={bufnr(fnamemodify(filename, ':.'))}"
   autocmd! InsertEnter * ++once exe $"sign unplace 4 buffer={bufnr('%')}"
+  foreground()
 enddef
 
 # ----------- Outline fetaure
