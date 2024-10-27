@@ -23,8 +23,7 @@ You also need a LaTeX distribution and `latexmk`.
 
 ### Windows
 
-- You need [SumatraPDF](https://www.sumatrapdfreader.org/free-pdf-reader). You
-  must rename the executable as `SumatraPDF.exe`.
+- You need [SumatraPDF](https://www.sumatrapdfreader.org/free-pdf-reader).
 - Open SumatraPDF.exe, go to _Settings/Options_ and replace the line in the
   _Set inverse-search command-line box_, with the following:
 
@@ -99,14 +98,9 @@ There are only two commands:
 
 ```
 :LatexRender # Build the .tex file
-:LatexOutlineToggle # Toggle the buffer outline
+:LatexOutlineToggle # Toggle the buffer outline. Disabled if you have
+vim-outline installed.
 ```
-
-> [!TIP]
->
-> If you find the `:LatexOutlineToggle` command useful, you may check out the
-> [vim-outline](https://github.com/ubaldot/vim-outline) plugin that supports
-> other file types in addition to LaTeX.
 
 ## Mappings
 

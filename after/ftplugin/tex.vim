@@ -3,9 +3,6 @@ vim9script
 # TODO:
 # - xdotool don't work on WSL
 # - Backwards search don't work with zathura and WSL
-# - pywinctl does not work on WSL OLD
-# - SumatraPDF backwards search
-# - "Press enter to continue" on Windows (but in general)
 
 # It requires:
 # All: latexmk, python3 and pywinget
@@ -119,10 +116,18 @@ def LatexRenderLinux(filename: string = '')
     vim_or_gvim = "gvim"
   endif
 
-  var synctex_command = $"{vim_or_gvim} --servername {vim_or_gvim} --remote-send ':call BackwardSearch(%\{line\}, %\{input\})<cr>'"
+  # TODO: tests for zathura. It does not work with WSL, see https://github.com/pwmt/zathura/issues/679
+  # Original command
+  var synctex_command = $"{vim_or_gvim} --servername {vim_or_gvim} --remote-send ':call BackwardSearch(+\\%\{line\}, \\%\{input\})<cr>'"
+  # tests
+  # synctex_command = $"{vim_or_gvim} --servername {vim_or_gvim} --remote-send ':call BackwardSearch(88, %:p)<cr>'"
+  synctex_command = $"gvim --servername vim --remote +\\%\{line\} \\%\{input\}"
   var open_file_cmd = $'zathura -x "{synctex_command}" --fork "{pdf_name}"'
+  # open_file_cmd = $'zathura -x "{synctex_command}" "{pdf_name}"'
 
-  job_start(open_file_cmd)
+  # Use exe to show the execv: file not found error. Once fixed, use job_start
+  # job_start(open_file_cmd)
+  exe $"!{open_file_cmd}"
   redraw
   # TODO This wait is a bit ugly. Consider using a callback instead.
   if executable('xdotool')
@@ -382,7 +387,9 @@ def LatexFilesCompletion(A: any, L: any, P: any): list<string>
   return getcompletion('*.tex', 'file')->filter($'v:val =~ "^{A}"')
 enddef
 command! -nargs=? -buffer -complete=customlist,LatexFilesCompletion LatexRender LatexRender(<f-args>)
-command! -buffer LatexOutlineToggle LatexOutlineToggle()
+if !exists('g:outline_loaded')
+  command! -buffer LatexOutlineToggle LatexOutlineToggle()
+endif
 
 
 if empty(maparg("%"))
