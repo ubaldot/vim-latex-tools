@@ -75,7 +75,7 @@ def LatexBuildCommon(filename: string = ''): string
     exe $'cd {fnamemodify(target_file, ':h')}'
   endif
   # Build and open
-  &l:makeprg = $'latexmk -pdf -{latex_engine} -synctex=1 -quiet -interaction=nonstopmode {target_file}'
+  &l:makeprg = $'latexmk -pdf -{latex_engine} -synctex=1 -quiet -interaction=nonstopmode "{target_file}"'
   make!
   return $'{fnamemodify(target_file, ':r')}.pdf'
 enddef
@@ -120,7 +120,7 @@ def LatexRenderLinux(filename: string = '')
   endif
 
   var synctex_command = $"{vim_or_gvim} --servername {vim_or_gvim} --remote-send ':call BackwardSearch(%\{line\}, %\{input\})<cr>'"
-  var open_file_cmd = $'zathura -x "{synctex_command}" --fork {pdf_name}'
+  var open_file_cmd = $'zathura -x "{synctex_command}" --fork "{pdf_name}"'
 
   job_start(open_file_cmd)
   redraw
