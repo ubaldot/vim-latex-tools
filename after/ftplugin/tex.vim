@@ -6,9 +6,6 @@ vim9script
 # - pywinctl does not work on WSL OLD
 # - SumatraPDF backwards search
 # - "Press enter to continue" on Windows (but in general)
-# - Ouline keep track of the number of jumps
-# - Sumatra-3-4-1 need to be renamed to SumatraPDF.exe.
-# - Use commands rather than mappings
 
 # It requires:
 # All: latexmk, python3 and pywinget
@@ -17,8 +14,6 @@ vim9script
 #
 
 # global vars
-#
-#
 
 var latex_engine = 'xelatex'
 if exists('g:latex_tools_config')
@@ -26,7 +21,7 @@ if exists('g:latex_tools_config')
 endif
 
 # Sumatra exec name
-var Sumatra_path = ''
+var Sumatra_exec = ''
 # OS detection
 var os = ''
 def IsWSL(): bool
@@ -139,25 +134,22 @@ enddef
 
 def LatexRenderWindows(filename: string = '')
   # Retrieve SmatraPDF exec name
-  if empty(Sumatra_path)
-    var Sumatra_path_list = systemlist('powershell -NoProfile -ExecutionPolicy Bypass -Command "Get-Command -Name \"Sumatra*\" -CommandType Application | Select-Object -ExpandProperty Name"')
-    if empty(Sumatra_path_list)
+  if empty(Sumatra_exec)
+    var Sumatra_exec_list = systemlist('powershell -NoProfile -ExecutionPolicy Bypass -Command "Get-Command -Name \"Sumatra*\" -CommandType Application | Select-Object -ExpandProperty Name"')
+    if empty(Sumatra_exec_list)
       echoerr "'SumatraPDF' executable not found!"
       return
-    elseif match(Sumatra_path_list[0], "\\s") != -1
-      Echoerr($"Executable name '{Sumatra_path_list[0]}' contains white-spaces")
+    elseif match(Sumatra_exec_list[0], "\\s") != -1
+      Echoerr($"Executable name '{Sumatra_exec_list[0]}' contains white-spaces")
       return
-    elseif len(Sumatra_path_list) > 1
-      Echowarn($"Multiple instances of 'SumatraPDF' found. Using {Sumatra_path_list[0]}")
+    elseif len(Sumatra_exec_list) > 1
+      Echowarn($"Multiple instances of 'SumatraPDF' found. Using {Sumatra_exec_list[0]->substitute('\r', '', 'g') }")
     endif
-    Sumatra_path = Sumatra_path_list[0]
+    Sumatra_exec = Sumatra_exec_list[0]->substitute('\r', '', 'g')
   endif
 
-
-
   var pdf_name = LatexBuildCommon(filename)
-  var open_file_cmd = $'{Sumatra_path} {pdf_name}'
-  # system($'powershell -NoProfile -ExecutionPolicy Bypass -Command "{open_file_cmd}"')
+  var open_file_cmd = $'{Sumatra_exec} {pdf_name}'
   job_start($'powershell -NoProfile -ExecutionPolicy Bypass -Command "{open_file_cmd}"')
   redraw
 enddef
@@ -259,7 +251,7 @@ def ForwardSearch()
   if os ==# "Darwin"
     exe $"silent !/Applications/Skim.app/Contents/SharedSupport/displayline {line('.')} {filename_root}.pdf"
   elseif os ==# 'Windows'
-    system($'{Sumatra_path} -forward-search {filename_root}.tex {line(".")} {filename_root}.pdf')
+    system($'{Sumatra_exec} -forward-search {filename_root}.tex {line(".")} {filename_root}.pdf')
   else
   var forward_sync_cmd = $'zathura --config-dir=$HOME/.config/zathurarc --synctex-forward {line('.')}:1:{filename_root}.tex {filename_root}.pdf'
     job_start(forward_sync_cmd)
