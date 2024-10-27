@@ -378,7 +378,7 @@ enddef
 
 # Commands and mappings
 def LatexFilesCompletion(A: any, L: any, P: any): list<string>
-  return getcompletion('*.tex', 'file')
+  return getcompletion('*.tex', 'file')->filter($'v:val =~ "^{A}"')
 enddef
 command! -nargs=? -buffer -complete=customlist,LatexFilesCompletion LatexRender LatexRender(<f-args>)
 command! -buffer LatexOutlineToggle LatexOutlineToggle()
