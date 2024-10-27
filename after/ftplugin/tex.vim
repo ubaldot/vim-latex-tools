@@ -82,7 +82,7 @@ def LatexBuildCommon(filename: string = ''): string
   # Build and open
   &l:makeprg = $'latexmk -pdf -{latex_engine} -synctex=1 -quiet -interaction=nonstopmode {target_file}'
   make!
-  return $'{fnamemodify(shellescape(target_file), ':r')}.pdf'
+  return $'{fnamemodify(target_file, ':r')}.pdf'
 enddef
 
 # def MoveAndResizeWin(pdf_name: string)
