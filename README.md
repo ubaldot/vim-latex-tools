@@ -45,8 +45,8 @@ If you use gvim, then replace `vim` with `gvim` in the above line.
 > [!WARNING]
 >
 > The backwards search does not work in WSL, see
-> [this issue](https://github.com/pwmt/zathura/issues/679). I don't know it it
-> works with ordinary Linux because I don't have installed. If someone wants
+> [this issue](https://github.com/pwmt/zathura/issues/679). I don't know if it
+> works with ordinary Linux because I don't have any Linux machine available. If someone wants
 > to give it a try and let me know I would appreciate it.
 
 ### MacOS
