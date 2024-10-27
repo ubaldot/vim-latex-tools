@@ -82,7 +82,7 @@ def LatexBuildCommon(filename: string = ''): string
   # Build and open
   &l:makeprg = $'latexmk -pdf -{latex_engine} -synctex=1 -quiet -interaction=nonstopmode {target_file}'
   make!
-  return $'{fnamemodify(target_file, ':r')}.pdf'
+  return $'{fnamemodify(shellescape(target_file), ':r')}.pdf'
 enddef
 
 # def MoveAndResizeWin(pdf_name: string)
@@ -123,12 +123,10 @@ def LatexRenderLinux(filename: string = '')
   if has("gui_running")
     vim_or_gvim = "gvim"
   endif
-  echom "instance: " .. vim_or_gvim
 
   var synctex_command = $"{vim_or_gvim} --servername {vim_or_gvim} --remote-send ':call BackwardSearch(%\{line\}, %\{input\})<cr>'"
   var open_file_cmd = $'zathura -x "{synctex_command}" --fork {pdf_name}'
 
-  echom "open_file_cmd: " .. open_file_cmd
   job_start(open_file_cmd)
   redraw
   # TODO This wait is a bit ugly. Consider using a callback instead.
@@ -139,16 +137,23 @@ def LatexRenderLinux(filename: string = '')
   endif
 enddef
 
-def LatexRenderWin(filename: string = '')
-  var Sumatra_path_list = systemlist('powershell -NoProfile -ExecutionPolicy Bypass -Command "Get-Command -Name "Sumatra*" -CommandType Application | Select-Object -ExpandProperty Name"')
+def LatexRenderWindows(filename: string = '')
+  # Retrieve SmatraPDF exec name
   if empty(Sumatra_path)
-    echoerr "'SumatraPDF' executable not found!"
-    return
-  elseif len(Sumatra_path_list) > 1
-    Echowarn($"Multiple instances of 'SumatraPDF' found. Using {Sumatra_path_list[0]}")
+    var Sumatra_path_list = systemlist('powershell -NoProfile -ExecutionPolicy Bypass -Command "Get-Command -Name \"Sumatra*\" -CommandType Application | Select-Object -ExpandProperty Name"')
+    if empty(Sumatra_path_list)
+      echoerr "'SumatraPDF' executable not found!"
+      return
+    elseif match(Sumatra_path_list[0], "\\s") != -1
+      Echoerr($"Executable name '{Sumatra_path_list[0]}' contains white-spaces")
+      return
+    elseif len(Sumatra_path_list) > 1
+      Echowarn($"Multiple instances of 'SumatraPDF' found. Using {Sumatra_path_list[0]}")
+    endif
+    Sumatra_path = Sumatra_path_list[0]
   endif
 
-  Sumatra_path = Sumatra_path_list[0]
+
 
   var pdf_name = LatexBuildCommon(filename)
   var open_file_cmd = $'{Sumatra_path} {pdf_name}'
@@ -267,7 +272,7 @@ if os == "Darwin"
 elseif os ==# "Linux" || os ==# 'WSL'
   LatexRender = LatexRenderLinux
 else
-  LatexRender = LatexRenderWin
+  LatexRender = LatexRenderWindows
 endif
 
 def g:BackwardSearch(line: number, filename: string)
