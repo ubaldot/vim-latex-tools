@@ -149,7 +149,7 @@ def LatexRenderWindows(filename: string = '')
   endif
 
   var pdf_name = LatexBuildCommon(filename)
-  var open_file_cmd = $'{Sumatra_exec} {pdf_name}'
+  var open_file_cmd = $"{Sumatra_exec} '{pdf_name}'"
   job_start($'powershell -NoProfile -ExecutionPolicy Bypass -Command "{open_file_cmd}"')
   redraw
 enddef
