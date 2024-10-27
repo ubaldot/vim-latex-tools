@@ -277,6 +277,7 @@ def g:BackwardSearch(line: number, filename: string)
   # gvim --servername gvim --remote-send ":call BackwardSearch(%l, '%f')<cr>"
   # echom $"filename: {filename}, line: {line}"
   silent exe $"sign unplace 4 buffer={bufnr('%')}"
+  # TODO If the file is closed, then open it.
   exe $'buffer {bufnr(fnamemodify(filename, ':.'))}'
   cursor(line, 1)
   exe $"sign place 4 line={line} name=ChangeEnv buffer={bufnr(fnamemodify(filename, ':.'))}"
