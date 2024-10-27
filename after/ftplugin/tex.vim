@@ -145,7 +145,7 @@ def LatexRenderWin(filename: string = '')
     echoerr "'SumatraPDF' executable not found!"
     return
   elseif len(Sumatra_path_list) > 1
-    WarningMsg($"Multiple instances of 'SumatraPDF' found. Using {Sumatra_path_list[0]}")
+    Echowarn($"Multiple instances of 'SumatraPDF' found. Using {Sumatra_path_list[0]}")
   endif
 
   Sumatra_path = Sumatra_path_list[0]
