@@ -36,11 +36,11 @@ If you use gvim, then replace `vim` with `gvim` in the above line.
 
 > [!NOTE]
 > Sometimes the backwards search does not put the Vim/Gvim in foreground but you have to manually do it.
-> This happens because Windows does not allow to windows to bring themselves in foreground. See also `:h foreground()`. The line in the source code is however highlighted. 
+> This happens because Windows does not allow to windows to bring themselves in foreground. See also `:h foreground()`. The line in the source code is however highlighted.
 
 ### Linux
 
-- You need [zathura](https://www.sumatrapdfreader.org/free-pdf-reader).
+- You need [zathura](https://pwmt.org/projects/zathura/).
 - Add the following lines to `~/.config/zathura/zathurarc`
 
 ```
