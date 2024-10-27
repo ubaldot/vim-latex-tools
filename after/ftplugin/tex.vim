@@ -113,13 +113,22 @@ def LatexRenderLinux(filename: string = '')
   else
     silent! exe "!pkill zathura"
   endif
-  # var fork = empty(system($'xdotool search --onlyvisible --name {pdf_name}')) ? '--fork' : ''
-  var open_file_cmd = $'zathura --config-dir=$HOME/.config/zathura/zathurarc --fork {pdf_name}'
-  var move_and_resize_cmd = $'xdotool search --onlyvisible --name {pdf_name} windowsize 900 1000 windowmove 1000 0'
+
+  var vim_or_gvim = "vim"
+  if has("gui_running")
+    vim_or_gvim = "gvim"
+  endif
+  echom "instance: " .. vim_or_gvim
+
+  var synctex_command = $"{vim_or_gvim} --servername {vim_or_gvim} --remote-send ':call BackwardSearch(%\{line\}, %\{input\})<cr>'"
+  var open_file_cmd = $'zathura -x "{synctex_command}" --fork {pdf_name}'
+
+  echom "open_file_cmd: " .. open_file_cmd
   job_start(open_file_cmd)
   redraw
   # TODO This wait is a bit ugly. Consider using a callback instead.
   if executable('xdotool')
+    var move_and_resize_cmd = $'xdotool search --onlyvisible --name {pdf_name} windowsize 900 1000 windowmove 1000 0'
     sleep 100m
     job_start(move_and_resize_cmd)
   endif

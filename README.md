@@ -41,15 +41,13 @@ If you use gvim, then replace `vim` with `gvim` in the above line.
 ### Linux
 
 - You need [zathura](https://pwmt.org/projects/zathura/).
-- Add the following lines to `~/.config/zathura/zathurarc`
 
-```
-set synctex true
-set synctex-editor-command "vim --servername vim --remote-send ':call BackwardSearch(%{line}, %{input})<cr>'"
-```
-
-If you use gvim, then replace `vim` with `gvim` in the above line. If
-`~/.config/zathura/zathurarc` file does not exist, create it.
+> [!WARNING]
+>
+> The backwards search does not work in WSL, see
+> [this issue](https://github.com/pwmt/zathura/issues/679). I don't know it it
+> works with ordinary Linux because I don't have installed. If someone wants
+> to give it a try and let me know I would appreciate it.
 
 ### MacOS
 
