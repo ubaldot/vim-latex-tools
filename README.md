@@ -51,7 +51,7 @@ If you use gvim, then replace `vim` with `gvim` in the above line.
 
 ### MacOS
 
-- You need [Skim.app](https://github.com/yegappan/lsp).
+- You need [Skim.app](https://skim-app.sourceforge.io/).
 - Open `Skim.app` and go to _Skim/Settings..._ and in the tab _Sync_ set the
   _PDF-TeX Sync support_ fields as it follows
 
