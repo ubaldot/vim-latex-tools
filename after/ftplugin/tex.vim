@@ -17,11 +17,16 @@ vim9script
 #
 
 # global vars
+#
+#
+
 var latex_engine = 'xelatex'
 if exists('g:latex_tools_config')
   latex_engine = get('g:latex_tools_config', 'latex_engine', 'xelatex') : 'xelatex'
 endif
 
+# Sumatra exec name
+var Sumatra_path = ''
 # OS detection
 var os = ''
 def IsWSL(): bool
@@ -135,13 +140,18 @@ def LatexRenderLinux(filename: string = '')
 enddef
 
 def LatexRenderWin(filename: string = '')
-  if !executable('SumatraPDF')
-    echoerr "'SumatraPDF.exe' not found! Is SumatraPDF executable renamed as 'SumatraPDF.exe'?"
+  var Sumatra_path_list = systemlist('powershell -NoProfile -ExecutionPolicy Bypass -Command "Get-Command -Name "Sumatra*" -CommandType Application | Select-Object -ExpandProperty Name"')
+  if empty(Sumatra_path)
+    echoerr "'SumatraPDF' executable not found!"
     return
+  elseif len(Sumatra_path_list) > 1
+    WarningMsg($"Multiple instances of 'SumatraPDF' found. Using {Sumatra_path_list[0]}")
   endif
 
+  Sumatra_path = Sumatra_path_list[0]
+
   var pdf_name = LatexBuildCommon(filename)
-  var open_file_cmd = $'SumatraPDF.exe {pdf_name}'
+  var open_file_cmd = $'{Sumatra_path} {pdf_name}'
   # system($'powershell -NoProfile -ExecutionPolicy Bypass -Command "{open_file_cmd}"')
   job_start($'powershell -NoProfile -ExecutionPolicy Bypass -Command "{open_file_cmd}"')
   redraw
@@ -244,7 +254,7 @@ def ForwardSearch()
   if os ==# "Darwin"
     exe $"silent !/Applications/Skim.app/Contents/SharedSupport/displayline {line('.')} {filename_root}.pdf"
   elseif os ==# 'Windows'
-    system($'SumatraPDF.exe -forward-search {filename_root}.tex {line(".")} {filename_root}.pdf')
+    system($'{Sumatra_path} -forward-search {filename_root}.tex {line(".")} {filename_root}.pdf')
   else
   var forward_sync_cmd = $'zathura --config-dir=$HOME/.config/zathurarc --synctex-forward {line('.')}:1:{filename_root}.tex {filename_root}.pdf'
     job_start(forward_sync_cmd)
