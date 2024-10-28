@@ -261,8 +261,11 @@ def ForwardSearch()
   elseif os ==# 'Windows'
     system($'{Sumatra_exec} -forward-search {filename_root}.tex {line(".")} {filename_root}.pdf')
   else
-  var forward_sync_cmd = $'zathura --config-dir=$HOME/.config/zathurarc --synctex-forward {line('.')}:1:{filename_root}.tex {filename_root}.pdf'
+  var forward_sync_cmd = $'zathura --synctex-forward {line('.')}:1:{filename_root}.tex {filename_root}.pdf'
     job_start(forward_sync_cmd)
+  endif
+  if v:shell_error > 0
+    Echoerr("Forward sync issues!")
   endif
 enddef
 
