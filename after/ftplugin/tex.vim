@@ -158,7 +158,7 @@ def LatexRenderWindows(filename: string = '')
   job_start($'powershell -NoProfile -ExecutionPolicy Bypass -Command "{open_file_cmd}"')
   redraw
   if v:shell_error > 0
-    Echoerr("SumatraPDF failed to build")
+    Echoerr($"SumatraPDF failed to build. Check '{fnamemodify(pdf_name, 'r:')}.log'")
   endif
 enddef
 
