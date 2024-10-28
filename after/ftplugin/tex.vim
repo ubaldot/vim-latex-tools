@@ -157,6 +157,9 @@ def LatexRenderWindows(filename: string = '')
   var open_file_cmd = $"{Sumatra_exec} '{pdf_name}'"
   job_start($'powershell -NoProfile -ExecutionPolicy Bypass -Command "{open_file_cmd}"')
   redraw
+  if v:shell_error > 0
+    Echoerr("SumatraPDF failed to build")
+  endif
 enddef
 
 def LatexRenderAndOpenMac(filename: string = '')
