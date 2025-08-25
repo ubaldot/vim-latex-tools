@@ -1,4 +1,4 @@
-vim9script noclear
+vim9script
 
 # A bunch of utility functions for editing your LaTeX documents.
 # Maintainer:	Ubaldo Tiberi
