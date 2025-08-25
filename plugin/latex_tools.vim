@@ -10,7 +10,4 @@ if !has('vim9script') ||  v:version < 900
   finish
 endif
 
-if exists('g:loaded_latex_tools') && g:loaded_latex_tools
-  finish
-endif
 g:loaded_latex_tools = true
