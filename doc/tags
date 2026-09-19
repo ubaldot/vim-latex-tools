@@ -1,0 +1,14 @@
+:LatexOutlineToggle	latex-tools.txt	/*:LatexOutlineToggle*
+:LatexRender	latex-tools.txt	/*:LatexRender*
+latex-tools-autocompletion	latex-tools.txt	/*latex-tools-autocompletion*
+latex-tools-commands	latex-tools.txt	/*latex-tools-commands*
+latex-tools-configuration	latex-tools.txt	/*latex-tools-configuration*
+latex-tools-contents	latex-tools.txt	/*latex-tools-contents*
+latex-tools-introduction	latex-tools.txt	/*latex-tools-introduction*
+latex-tools-license	latex-tools.txt	/*latex-tools-license*
+latex-tools-linux	latex-tools.txt	/*latex-tools-linux*
+latex-tools-macos	latex-tools.txt	/*latex-tools-macos*
+latex-tools-mappings	latex-tools.txt	/*latex-tools-mappings*
+latex-tools-requirements	latex-tools.txt	/*latex-tools-requirements*
+latex-tools-windows	latex-tools.txt	/*latex-tools-windows*
+ltex-tools.txt	latex-tools.txt	/*ltex-tools.txt*

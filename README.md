@@ -94,7 +94,7 @@ autocmd VimEnter * g:LspAddServer(lspServers)
 
 ## Commands
 
-There are only two commands:
+There are only two commands available:
 
 ```
 :LatexRender # Build the .tex file

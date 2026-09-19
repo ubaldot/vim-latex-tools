@@ -10,4 +10,10 @@ if !has('vim9script') ||  v:version < 900
   finish
 endif
 
+if !exists('g:loaded_latex_tools') || !g:loaded_latex_tools
+  if &filetype == 'tex'
+    doautocmd FileType
+  endif
+endif
+
 g:loaded_latex_tools = true
