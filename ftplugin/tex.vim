@@ -14,7 +14,7 @@ vim9script
 
 var latex_engine = 'xelatex'
 if exists('g:latex_tools_config')
-  latex_engine = get('g:latex_tools_config', 'latex_engine', 'xelatex') : 'xelatex'
+  latex_engine = get(g:latex_tools_config, 'latex_engine', 'xelatex')
 endif
 
 # Sumatra exec name
@@ -416,7 +416,7 @@ endif
 
 var use_default_mappings = true
 if exists('g:latex_tools_config')
-  use_default_mappings = get('g:latex_tools_config', 'use_default_mappings', true)
+  use_default_mappings = get(g:latex_tools_config, 'use_default_mappings', true)
 endif
 
 if use_default_mappings
